@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('posts', PostController::class)->middleware('auth');  
     Route::get('/posts/{id}/read', [PostController::class, 'read'])->name('posts.read');
     Route::post('/posts/{post}/vote', [PostController::class, 'vote'])->name('posts.vote')->middleware('auth');
+    Route::middleware('auth')->group(function () {
+    Route::resource('posts', PostController::class);});
 });
 
 

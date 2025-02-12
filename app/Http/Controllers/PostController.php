@@ -68,27 +68,35 @@ class PostController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id)
-    {
-        $post = Post::findOrFail($id);
-        return view('posts.edit', compact('post'));
+{
+    $post = Post::findOrFail($id);
+
+    if ($post->user_id !== Auth::id()) {
+        return redirect()->route('posts.index')
+            ->with('error', 'No puedes editar una publicación de la que no eres el autor.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Post $post)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'summary' => 'nullable|string|max:500',
-            'body' => 'required|string',
-            'published_at' => 'required|date',
-        ]);
-    
-        $post->update($validated);
-    
-        return redirect()->route('posts.index')->with('success', 'Publicación actualizada con éxito');
+    return view('posts.edit', compact('post'));
+}
+
+public function update(Request $request, Post $post)
+{
+    if ($post->user_id !== Auth::id()) {
+        return redirect()->route('posts.index')
+            ->with('error', 'No puedes actualizar una publicación de la que no eres el autor.');
     }
+
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'summary' => 'nullable|string|max:500',
+        'body' => 'required|string',
+        'published_at' => 'required|date',
+    ]);
+
+    $post->update($validated);
+
+    return redirect()->route('posts.index')->with('success', 'Publicación actualizada con éxito');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -104,6 +112,7 @@ class PostController extends Controller
                     ->with('error', 'No puedes eliminar una publicación de la que no eres el autor.');
         }      
     }
+
 
     public function vote(Post $post) {
 
@@ -131,6 +140,6 @@ class PostController extends Controller
         ->take(20)
         ->get();    
 
-    return view('home', compact('firstPosts', 'otherPosts'));
-}
+        return view('home', compact('firstPosts', 'otherPosts'));
+    }
 }

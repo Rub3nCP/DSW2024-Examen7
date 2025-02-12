@@ -33,7 +33,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts/{post}/vote', [PostController::class, 'vote'])->name('posts.vote')->middleware('auth');
     Route::middleware('auth')->group(function () {
     Route::resource('posts', PostController::class);});
+    Route::get('/change-theme', 'PostController@changeTheme')->name('changeTheme');
+    Route::get('/change-theme', [PostController::class, 'changeTheme'])->name('changeTheme');
 });
+
 
 
 require __DIR__.'/auth.php';

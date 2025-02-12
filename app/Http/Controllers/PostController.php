@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Theme;
 
 
 class PostController extends Controller
@@ -15,7 +16,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Auth::user()->posts;
-        return view('posts.index', compact('posts'));
+        $themes = Theme::all(); 
+        return view('posts.index', compact('posts', 'themes')); 
     }
 
     /**
@@ -141,5 +143,13 @@ public function update(Request $request, Post $post)
         ->get();    
 
         return view('home', compact('firstPosts', 'otherPosts'));
+    }
+
+    public function changeTheme(Request $request)
+    {
+        $themeId = $request->input('theme_id');
+        $theme = Theme::find($themeId);
+        $request->session()->put('theme', $theme);
+        return redirect()->back();
     }
 }

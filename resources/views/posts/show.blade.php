@@ -21,6 +21,9 @@
                   <p class="m-3 text-sm ">
                       {{ $post->body }}
                   </p>
+                    <h2>{{ $post->title }}</h2>
+                    <p>Tema: {{ $post->theme->name }}</p>
+                    <p>{{ $post->content }}</p>
                   <div class="grid grid-cols-6">
                       <div class="col-start-1 col-span-1 m-3">
                           <a href="{{ route('posts.index') }}"

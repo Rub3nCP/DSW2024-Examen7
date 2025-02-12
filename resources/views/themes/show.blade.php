@@ -1,0 +1,1 @@
+<p>Publicado en el tema: {{ $post->theme->name }}</p>

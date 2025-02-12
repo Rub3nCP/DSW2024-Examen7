@@ -27,5 +27,10 @@ class Post extends Model
     {
         return $this->belongsToMany(User::class, 'votes');
     }
+
+    public function theme() : BelongsTo
+    {
+        return $this->belongsTo(Theme::class);
+    }
 }
 

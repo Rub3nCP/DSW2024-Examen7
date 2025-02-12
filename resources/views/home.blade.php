@@ -36,6 +36,7 @@
                   {{ $post->user->name }}
                 </span>
               </span>
+              
             </div>
             <div class="m-3 text-right">
               <a class="text-sm bg-blue-200 p-2 rounded-xl" href="{{ Route('posts.read', $post->id)}}">
@@ -56,7 +57,6 @@
           <a href="{{ Route('posts.read', $post->id)}}"
             class="text-xl mt-3 col-auto mx-4 hover:text-blue-500">{{$post->title}}</a>
 
-          <!-- Mostrar el número de votos si existen -->
           @if ($post->votedUsers->count())
           <span class="text-sm font-mono bg-slate-200 p-2 rounded-xl ml-3">
             {{ $post->votedUsers->count() }} Votos

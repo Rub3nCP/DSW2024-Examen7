@@ -17,6 +17,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
+            'topic_id' => fake()->numberBetween(1, 4),
             'user_id' => fake()->numberBetween(1, 9),
             'title' => fake()->unique()->sentence(5,4),
             'summary' => fake()->paragraph(3),
@@ -24,4 +25,5 @@ class PostFactory extends Factory
             'published_at' => fake()->dateTimeBetween('-1 year', 'now'),
         ];
     }
+
 }
